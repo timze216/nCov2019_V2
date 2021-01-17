@@ -1,6 +1,21 @@
 ---
 title: "nCov2019: A R package for studying COVID-19 coronavirus outbreak"
-output: html_document
+author:
+- name: Tianzhi Wu, Erqiang Hu, Patrick Tung, Xijin Ge, Guangchuang Yu
+    
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    toc: true
+    theme: cayman
+    highlight: github
+  pdf_document:
+    toc: true
+package: nCov2019
+vignette: |
+  %\VignetteIndexEntry{nCov2019 introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -148,7 +163,7 @@ It could be also intuitively compare the number of new confirmed cases per day a
 library(ggplot2)
 library(dplyr)
 X <- res$historical
-X$table %>%
+X["global"] %>%
 group_by(country) %>%
 arrange(country,date) %>%
 mutate(diff = cases - lag(cases, default =  first(cases))) -> a
@@ -293,7 +308,7 @@ Plot the global trend in a novel way.
 require(dplyr)
 
 y <- res$historical
-d <- y$table
+d <- y["global"]
 
 time = as.Date("2020-03-19")
 dd <- filter(d, date == time) %>% 
@@ -385,6 +400,7 @@ dashboard could launch as below:
 dashboard()
 ```
 
+![dashboard](./dashboard.png)
 
 ## statistic item explanation
 
